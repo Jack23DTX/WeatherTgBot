@@ -22,6 +22,7 @@ func main() {
 	if !exists {
 		log.Fatal("TELEGRAM_TOKEN environment variable not set")
 	}
+
 	weatherApi, exists := os.LookupEnv("WEATHER_API")
 	if !exists {
 		log.Fatal("WEATHER_API environment variable not set")
