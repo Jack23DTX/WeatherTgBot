@@ -45,7 +45,18 @@ func main() {
 			if update.Message != nil {
 				log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
+				//var msg tgbotapi.MessageConfig
+
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, weather.Get(weatherApi, update.Message.Text))
+				//msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+
+				//if msg.Text == "/start" {
+				//	msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Привет! Я смогу подсказать дату, время, сколько сейчас на улице градусов и погодные условия в том городе, который ты мне напишешь!\n\nВАЖНО!\nНеобходимо писать название города на английском языке, иначе не смогу тебе помочь.")
+				//} else if msg.Text == "Привет" {
+				//	msg = tgbotapi.NewMessage(update.Message.Chat.ID, "Ну привет :)")
+				//}
+
+				//msg.ReplyToMessageID = update.Message.MessageID
 
 				tgBot.Send(msg)
 			}
