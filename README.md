@@ -1,6 +1,7 @@
 # WeatherTgBot
 The bot allows you to find out the current temperature, how it feels like and the weather conditions in the city you specify.
 
+You can obtain the API on the website: https://www.weatherapi.com/
 
 ## Example response
 Novosibirsk, Russia  
