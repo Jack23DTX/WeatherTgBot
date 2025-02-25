@@ -15,4 +15,4 @@ Novosibirsk, Russia
 - Set up .env:
     - TELEGRAM_TOKEN=your_token
     - WEATHER_API=your_key
-- Run: go run main.go
+- Run: go run main.go or run Dokerfile
