@@ -18,9 +18,9 @@ type Condition struct {
 }
 
 type Current struct {
-	Temp_c      float64
-	Feelslike_c float64
-	Condition   Condition
+	TempCelsius      float64 `json:"temp_c"`
+	FeelsLikeCelsius float64 `json:"feelslike_c"`
+	Condition        Condition
 }
 
 type Weather struct {
@@ -41,7 +41,7 @@ func Get(weatherApi, loc string) string {
 		log.Println("Error decoding weather data")
 	}
 	resp := fmt.Sprintf("%s, %s\nДата и время: %s\nТемпература: %.1f°C\nОщущается как: %.1f°C,\nПогодные условия: %s\n",
-		w.Location.Name, w.Location.Country, w.Location.Localtime, w.Current.Temp_c, w.Current.Feelslike_c, w.Current.Condition.Text)
+		w.Location.Name, w.Location.Country, w.Location.Localtime, w.Current.TempCelsius, w.Current.FeelsLikeCelsius, w.Current.Condition.Text)
 
 	return resp
 }
