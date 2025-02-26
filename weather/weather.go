@@ -29,7 +29,7 @@ type Weather struct {
 	Condition Condition
 }
 
-func Get(weatherApi, loc string) string {
+func Get(weatherApi, loc string) Weather {
 	req, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/current.json?key=%s&q=%s&aqi=no", weatherApi, loc))
 	if err != nil {
 		log.Println("Error getting weather data")
@@ -40,8 +40,6 @@ func Get(weatherApi, loc string) string {
 	if err != nil {
 		log.Println("Error decoding weather data")
 	}
-	resp := fmt.Sprintf("%s, %s\nДата и время: %s\nТемпература: %.1f°C\nОщущается как: %.1f°C,\nПогодные условия: %s\n",
-		w.Location.Name, w.Location.Country, w.Location.Localtime, w.Current.TempCelsius, w.Current.FeelsLikeCelsius, w.Current.Condition.Text)
 
-	return resp
+	return w
 }
