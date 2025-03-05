@@ -7,6 +7,7 @@ COPY go.mod go.sum ./
 
 RUN go mod download
 
+COPY entity ./entity
 COPY weather ./weather
 COPY cmd ./cmd
 

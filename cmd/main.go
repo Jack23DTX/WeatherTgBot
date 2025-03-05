@@ -9,6 +9,8 @@ import (
 	"os"
 )
 
+const ansFormat = "%s, %s\nДата и время: %s\nТемпература: %.1f°C\nОщущается как: %.1f°C,\nПогодные условия: %s\n"
+
 func init() {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
@@ -39,14 +41,15 @@ func main() {
 	u.Timeout = 60
 
 	updates := tgBot.GetUpdatesChan(u)
+	weatherClient := weather.NewClient(weatherApi)
 
 	for update := range updates {
 		if update.Message != nil {
 			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
-			str := weather.Get(weatherApi, update.Message.Text)
-			ans := fmt.Sprintf(fmt.Sprintf("%s, %s\nДата и время: %s\nТемпература: %.1f°C\nОщущается как: %.1f°C,\nПогодные условия: %s\n",
-				str.Location.Name, str.Location.Country, str.Location.Localtime, str.Current.TempCelsius, str.Current.FeelsLikeCelsius, str.Current.Condition.Text))
+			str := weatherClient.Get(update.Message.Text)
+			ans := fmt.Sprintf(ansFormat, str.Location.Name, str.Location.Country, str.Location.Localtime,
+				str.Current.TempCelsius, str.Current.FeelsLikeCelsius, str.Current.Condition.Text)
 
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, ans)
 

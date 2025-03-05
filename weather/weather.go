@@ -5,37 +5,27 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"ProjectBot1/entity"
 )
 
-type Location struct {
-	Name      string
-	Country   string
-	Localtime string
+type Client struct {
+	apiKey string
 }
 
-type Condition struct {
-	Text string
+func NewClient(apiKey string) Client {
+	return Client{
+		apiKey: apiKey,
+	}
 }
 
-type Current struct {
-	TempCelsius      float64 `json:"temp_c"`
-	FeelsLikeCelsius float64 `json:"feelslike_c"`
-	Condition        Condition
-}
-
-type Weather struct {
-	Location  Location
-	Current   Current
-	Condition Condition
-}
-
-func Get(weatherApi, loc string) Weather {
-	req, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/current.json?key=%s&q=%s&aqi=no", weatherApi, loc))
+func (c Client) Get(loc string) entity.Weather {
+	req, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/current.json?key=%s&q=%s&aqi=no", c.apiKey, loc))
 	if err != nil {
 		log.Println("Error getting weather data")
 	}
 	defer req.Body.Close()
-	var w Weather
+	var w entity.Weather
 	err = json.NewDecoder(req.Body).Decode(&w)
 	if err != nil {
 		log.Println("Error decoding weather data")
